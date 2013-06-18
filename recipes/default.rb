@@ -1,7 +1,14 @@
 
 include_recipe "elixir"
 
-cookbook_file "#{node[:elixir_mapreduce][:install_dir]}/map_reduce.ex" do
-  source "map_reduce.ex"
-  mode 0755
+git "#{node[:elixir_mapreduce][:install_dir]}/collabs" do
+  repository "https://github.com/aforward/collabs"
+  action :sync
+  notifies :run, "execute[compile collabs]", :immediately
+end
+
+execute "compile collabs" do
+  command "mix deps.get; mix deps; mix compile"
+  cwd "#{node[:elixir_mapreduce][:install_dir]}/collabs"
+  # action :nothing
 end
