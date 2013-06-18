@@ -1,4 +1,7 @@
 
 include_recipe "elixir"
-include_recipe "elixir::erlang"
-include_recipe "elixir::from_source"
+
+cookbook_file "#{node[:elixir_mapreduce][:install_dir]}/map_reduce.ex" do
+  source "map_reduce.ex"
+  mode 0755
+end
