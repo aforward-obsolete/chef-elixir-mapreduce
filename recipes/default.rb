@@ -3,7 +3,9 @@ include_recipe "elixir"
 
 git "#{node[:elixir_mapreduce][:install_dir]}/collabs" do
   repository "https://github.com/aforward/collabs"
-  action :sync
+  user 'root'
+  group 'root'
+  depth 1
   notifies :run, "execute[compile collabs]", :immediately
 end
 
